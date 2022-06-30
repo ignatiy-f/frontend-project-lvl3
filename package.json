@@ -10,7 +10,8 @@
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "webpack": "webpack"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,13 @@
   },
   "homepage": "https://github.com/ignatiy-f/frontend-project-lvl3#readme",
   "dependencies": {
+    "axios": "^0.27.2",
     "bootstrap": "^5.2.0-beta1",
-    "workbox-webpack-plugin": "^6.5.3"
+    "i18next": "^21.8.11",
+    "on-change": "^4.0.1",
+    "style-loader": "^3.3.1",
+    "workbox-webpack-plugin": "^6.5.3",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@webpack-cli/generators": "^2.5.0",
