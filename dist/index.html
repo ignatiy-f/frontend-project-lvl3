@@ -1,26 +1,59 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Webpack App</title>
-    <script defer src="main.js"></script></head>
-    <body>
-        <h1>Hello world!</h1>
-        <h2>Tip: Check your console</h2>
-    </body>
-    
-    <script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", () => {
-                navigator.serviceWorker
-                    .register("service-worker.js")
-                    .then((registration) => {
-                        console.log("Service Worker registered: ", registration);
-                    })
-                    .catch((registrationError) => {
-                        console.error("Service Worker registration failed: ", registrationError);
-                    });
-            });
-        }
-    </script>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<script defer src="main.js"></script></head>
+<body>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel"></h5>
+                <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <a target="_blank" class="btn btn-primary full-article">Читать полностью</a>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="flex-grow-1">
+    <section class="container-fluid p-5">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 mx-auto">
+                <h1>RSS Агрегатор</h1>
+                <form class="form-floating rss-form">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-floating">
+                                <input class="form-control w-100" id="url-input" name="url" aria-label="url" placeholder="Ссылка">
+                                <label for="url-input">Вставьте ссылку</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" aria-label="add" class="h-100 btn btn-lg btn-success px-sm-5">Добавить</button>
+                        </div>
+                    </div>
+                    <p class="mt-2 mb-0 text-muted">Пример: https://ru.hexlet.io/lessons.rss, https://lenta.ru/rss/news</p>
+                    <p class="feedback m-0 position-absolute small text-danger"></p>
+                </form>
+            </div>
+        </div>
+    </section>
+    <section class="container-fluid p-5">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 posts"></div>
+            <div class="col-md-10 col-lg-4 feeds"></div>
+        </div>
+    </section>
+</main>
+</body>
 </html>

@@ -1,16 +1,12 @@
 {
-  "name": "my-webpack-project",
+  "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "My webpack project",
+  "description": "Frontend rss reader",
   "main": "src/app.js",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode=production --node-env=production",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch",
-    "serve": "webpack serve",
+    "build": "webpack",
     "webpack": "webpack"
   },
   "repository": {
@@ -29,6 +25,7 @@
     "i18next": "^21.8.11",
     "on-change": "^4.0.1",
     "style-loader": "^3.3.1",
+    "vercel": "^25.2.3",
     "workbox-webpack-plugin": "^6.5.3",
     "yup": "^0.32.11"
   },
