@@ -1,12 +1,18 @@
+import * as yup from 'yup';
 import onChange from 'on-change';
 import i18next from 'i18next';
-import * as yup from 'yup';
 import resources from './locales/ru.js';
+
 import {
   renderFeeds,
+  renderItems,
+  renderModal,
+  renderMessage,
+  markRead,
 } from './render';
 import { updateRss, downloadRss } from './rss';
 
+console.log ('hello world')
 const validation = (url, feeds) => {
   yup.setLocale({
     mixed: {
@@ -70,19 +76,19 @@ export default () => {
         break;
 
       case 'successfully':
-        //renderMessage(state, form, i18nInstance);
+        renderMessage(state, form, i18nInstance);
 
         input.removeAttribute('readonly');
         button.disabled = false;
 
         renderFeeds(state.feeds, i18nInstance);
-        //renderItems(state.items, i18nInstance);
-        //modalAction(watchedState);
+        renderItems(state.items, i18nInstance);
+        modalAction(watchedState);
         break;
 
       case 'updated':
-        //renderItems(state.items, i18nInstance);
-        //modalAction(watchedState);
+        renderItems(state.items, i18nInstance);
+        modalAction(watchedState);
         break;
 
       case 'loading':
@@ -91,14 +97,14 @@ export default () => {
         break;
 
       case 'error':
-        //renderMessage(state, form, i18nInstance);
+        renderMessage(state, form, i18nInstance);
         input.removeAttribute('readonly');
         button.disabled = false;
         break;
 
       case 'modal':
-        //renderModal(state.modalId, state.items);
-        //markRead(state.readPosts);
+        renderModal(state.modalId, state.items);
+        markRead(state.readPosts);
         break;
 
       default:
@@ -106,13 +112,20 @@ export default () => {
     }
   });
 
+  const update = () => updateRss(watchedState, state)
+    .then(() => {
+      setTimeout(update, 5000);
+    })
+    .catch((e) => console.log('Update RSS error!', e));
+
+  update();
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
     const url = { url: formData.get('url') };
     const feedsUrls = state.feeds.map((feed) => feed.url);
-    console.log(state);
     validation(url, feedsUrls)
       .then((data) => {
         if (data.url) {
