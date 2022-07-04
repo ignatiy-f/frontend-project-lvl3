@@ -5,6 +5,7 @@ import resources from './locales/ru.js';
 import {
   renderFeeds,
 } from './render';
+import { updateRss, downloadRss } from './rss';
 
 const validation = (url, feeds) => {
   yup.setLocale({
@@ -53,6 +54,14 @@ export default () => {
   const button = form.querySelector('.btn');
   const input = form.querySelector('#url-input');
 
+  const modalAction = (watchedState) => Array
+    .from(document.querySelectorAll('button[data-bs-toggle="modal"]'))
+    .map((btn) => button.addEventListener('click', () => {
+      watchedState.modalId = btn.dataset.id;
+      watchedState.readPosts.push(btn.dataset.id);
+      watchedState.process = 'modal';
+    }));
+
   const watchedState = onChange(state, (path, value) => {
     switch (state.process) {
       case 'filling':
@@ -95,5 +104,35 @@ export default () => {
       default:
         throw new Error(value);
     }
+  });
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const url = { url: formData.get('url') };
+    const feedsUrls = state.feeds.map((feed) => feed.url);
+    console.log(state);
+    validation(url, feedsUrls)
+      .then((data) => {
+        if (data.url) {
+          watchedState.process = 'loading';
+          downloadRss(watchedState, data.url)
+            .then(() => {
+              watchedState.message = 'SuccessAdding';
+              watchedState.messageType = 'success';
+              watchedState.process = 'successfully';
+            })
+            .catch((e) => {
+              watchedState.message = event.message;
+              watchedState.messageType = 'error';
+              watchedState.process = 'error';
+            });
+        } else {
+          watchedState.message = data.message;
+          watchedState.messageType = 'error';
+          watchedState.process = 'error';
+        }
+      });
   });
 };
