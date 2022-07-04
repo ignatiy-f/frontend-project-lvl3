@@ -21,18 +21,20 @@
   "homepage": "https://github.com/ignatiy-f/frontend-project-lvl3#readme",
   "dependencies": {
     "axios": "^0.27.2",
+    "babel-loader": "^8.2.5",
     "bootstrap": "^5.2.0-beta1",
     "i18next": "^21.8.11",
     "lodash": "^4.17.21",
     "on-change": "^4.0.1",
-    "postcss-loader": "^7.0.0",
-    "style-loader": "^3.3.1",
     "vercel": "^25.2.3",
     "workbox-webpack-plugin": "^6.5.3",
     "yup": "^0.32.11"
   },
   "devDependencies": {
     "@webpack-cli/generators": "^2.5.0",
+    "postcss-preset-env": "^7.7.2",
+    "postcss-loader": "^7.0.0",
+    "style-loader": "^3.3.1",
     "css-loader": "^6.7.1",
     "eslint": "^8.18.0",
     "eslint-config-airbnb-base": "^15.0.0",

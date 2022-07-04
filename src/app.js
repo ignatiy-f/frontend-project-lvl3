@@ -12,7 +12,7 @@ import {
 } from './render';
 import { updateRss, downloadRss } from './rss';
 
-console.log ('hello world')
+console.log ('hello world');
 const validation = (url, feeds) => {
   yup.setLocale({
     mixed: {
