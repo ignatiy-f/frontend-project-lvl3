@@ -1,4 +1,4 @@
-const renderFeeds = (feeds, i18nInstance) => {
+const renderFeeds = (feeds) => {
   const container = document.querySelector('.feeds');
   container.textContent = '';
 
@@ -36,7 +36,7 @@ const renderItems = (posts, i18nInstance) => {
   container.textContent = '';
 
   const title = document.createElement('h3');
-  title.textContent = i18nInstance.t('blocksTitle.posts');
+  title.textContent = 'Посты';
   title.classList.add('px-3');
   container.append(title);
 
@@ -99,17 +99,17 @@ const renderMessage = ({ messageType, message }, form, i18nInstance) => {
   }
 
   switch (message) {
-    case 'SuccessAdding':
+    case 'successAdding':
       p.textContent = i18nInstance.t(`messages.${message}`);
       form.reset();
       input.focus();
       break;
 
-    case 'ValidationError':
-    case 'NoValidRss':
-    case 'DuplicateUrl':
-    case 'NotBeEmpty':
+    case 'invalidURL':
+    case 'duplicate':
+    case 'downloadError':
     case 'Network Error':
+    case 'required':
       p.textContent = i18nInstance.t(`messages.${message}`);
       break;
 

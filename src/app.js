@@ -81,7 +81,7 @@ export default () => {
         input.removeAttribute('readonly');
         button.disabled = false;
 
-        renderFeeds(state.feeds, i18nInstance);
+        renderFeeds(state.feeds);
         renderItems(state.items, i18nInstance);
         modalAction(watchedState);
         break;

@@ -3,10 +3,9 @@ import { differenceWith, isEqual, uniqueId } from 'lodash';
 import domParser from './parser';
 
 const downloadRss = (watchedState, url) => axios
-  .get(`https://hexlet-allorigins.herokuapp.com/get?disableCache=true&url=${encodeURIComponent(url)}`)
+  .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
   .then((response) => {
     const data = domParser(response.data.contents);
-    console.log(url);
     const feedId = uniqueId();
     watchedState.feeds.push({
       id: feedId,
@@ -32,7 +31,7 @@ const downloadRss = (watchedState, url) => axios
 const updateRss = (watchedState, state) => {
   const { feeds, items } = state;
   const promises = feeds.reverse().map((feed) => axios
-    .get(`https://hexlet-allorigins.herokuapp.com/get?disableCache=true&url=${encodeURIComponent(feed.url)}`)
+    .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(feed.url)}`)
     .then((res) => {
       const data = domParser(res.data.contents);
 
