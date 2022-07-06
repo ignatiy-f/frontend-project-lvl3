@@ -5,7 +5,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/1a8ab5a6a216b71e539f/maintainability)](https://codeclimate.com/github/ignatiy-f/frontend-project-lvl3/maintainability)
 
 
-https://frontend-project-lvl3-6ea89bllr-ignatiy-f.vercel.app
+https://frontend-project-lvl3-bice-two.vercel.app
 
 ---
 
