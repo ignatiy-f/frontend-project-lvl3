@@ -62,7 +62,7 @@ export default () => {
 
   const modalAction = (watchedState) => Array
     .from(document.querySelectorAll('button[data-bs-toggle="modal"]'))
-    .map((btn) => button.addEventListener('click', () => {
+    .map((btn) => btn.addEventListener('click', () => {
       watchedState.modalId = btn.dataset.id;
       watchedState.readPosts.push(btn.dataset.id);
       watchedState.process = 'modal';
@@ -77,11 +77,9 @@ export default () => {
 
       case 'successfully':
         renderMessage(state, form, i18nInstance);
-
         input.removeAttribute('readonly');
         button.disabled = false;
-
-        renderFeeds(state.feeds);
+        renderFeeds(state.feeds, i18nInstance);
         renderItems(state.items, i18nInstance);
         modalAction(watchedState);
         break;
@@ -126,18 +124,19 @@ export default () => {
     const formData = new FormData(event.currentTarget);
     const url = { url: formData.get('url') };
     const feedsUrls = state.feeds.map((feed) => feed.url);
+    console.log(state);
     validation(url, feedsUrls)
       .then((data) => {
         if (data.url) {
           watchedState.process = 'loading';
           downloadRss(watchedState, data.url)
             .then(() => {
-              watchedState.message = 'SuccessAdding';
+              watchedState.message = 'successAdding';
               watchedState.messageType = 'success';
               watchedState.process = 'successfully';
             })
             .catch((e) => {
-              watchedState.message = event.message;
+              watchedState.message = e.message;
               watchedState.messageType = 'error';
               watchedState.process = 'error';
             });

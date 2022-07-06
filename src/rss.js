@@ -6,7 +6,9 @@ const downloadRss = (watchedState, url) => axios
   .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
   .then((response) => {
     const data = domParser(response.data.contents);
+    console.log(data);
     const feedId = uniqueId();
+
     watchedState.feeds.push({
       id: feedId,
       title: data.channelTitle,
@@ -21,10 +23,10 @@ const downloadRss = (watchedState, url) => axios
       link,
       description,
     }));
-
     watchedState.items.unshift(...feedItems);
   })
   .catch((e) => {
+    console.log('boom1');
     throw e;
   });
 
@@ -58,7 +60,6 @@ const updateRss = (watchedState, state) => {
       }
     })
     .catch((e) => e));
-
   return Promise.all(promises);
 };
 

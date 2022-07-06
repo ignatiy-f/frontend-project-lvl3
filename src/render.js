@@ -1,9 +1,9 @@
-const renderFeeds = (feeds) => {
+const renderFeeds = (feeds, i18nInstance) => {
   const container = document.querySelector('.feeds');
   container.textContent = '';
 
   const title = document.createElement('h3');
-  title.textContent = 'Фиды';
+  title.textContent = i18nInstance.t('blocksName.feeds');
   title.classList.add('px-3');
   container.append(title);
 
@@ -36,7 +36,7 @@ const renderItems = (posts, i18nInstance) => {
   container.textContent = '';
 
   const title = document.createElement('h3');
-  title.textContent = 'Посты';
+  title.textContent = i18nInstance.t('blocksName.posts');
   title.classList.add('px-3');
   container.append(title);
 
@@ -62,7 +62,7 @@ const renderItems = (posts, i18nInstance) => {
 
     const button = document.createElement('button');
     button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
-    button.textContent = i18nInstance.t('view');
+    button.textContent = i18nInstance.t('buttons.view');
     button.setAttribute('type', 'button');
     button.setAttribute('data-bs-toggle', 'modal');
     button.setAttribute('data-bs-target', '#modal');

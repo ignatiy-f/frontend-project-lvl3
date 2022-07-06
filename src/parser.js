@@ -2,8 +2,8 @@ export default (string) => {
   const domParser = new DOMParser();
   const doc = domParser.parseFromString(string, 'text/xml');
   const rss = doc.querySelector('rss');
-
   if (!rss) {
+    console.log('boom');
     throw new Error('parseError');
   }
 
