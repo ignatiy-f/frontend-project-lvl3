@@ -13,7 +13,10 @@
     "type": "git",
     "url": "git+https://github.com/ignatiy-f/frontend-project-lvl3.git"
   },
-  "author": "",
+  "author": {
+    "name": "Ignatiy Funtikov",
+    "email": "ignatiysecond@gmail.com"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ignatiy-f/frontend-project-lvl3/issues"

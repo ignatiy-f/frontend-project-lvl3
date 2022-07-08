@@ -1,4 +1,4 @@
-const renderFeeds = (feeds, i18nInstance) => {
+export const renderFeeds = (feeds, i18nInstance) => {
   const container = document.querySelector('.feeds');
   container.textContent = '';
 
@@ -31,7 +31,7 @@ const renderFeeds = (feeds, i18nInstance) => {
   container.append(feedList);
 };
 
-const renderItems = (posts, i18nInstance) => {
+export const renderItems = (posts, i18nInstance) => {
   const container = document.querySelector('.posts');
   container.textContent = '';
 
@@ -77,7 +77,7 @@ const renderItems = (posts, i18nInstance) => {
   container.append(postList);
 };
 
-const renderMessage = ({ messageType, message }, form, i18nInstance) => {
+export const renderMessage = ({ messageType, message }, form, i18nInstance) => {
   const p = form.querySelector('.feedback');
   const input = form.querySelector('input');
 
@@ -120,7 +120,7 @@ const renderMessage = ({ messageType, message }, form, i18nInstance) => {
   form.append(p);
 };
 
-const renderModal = (inboxId, posts) => {
+export const renderModal = (inboxId, posts) => {
   const modalPost = posts.filter(({ id }) => id === inboxId)[0];
   const modal = document.querySelector('#modal');
 
@@ -134,18 +134,10 @@ const renderModal = (inboxId, posts) => {
   articleLinkButton.setAttribute('href', modalPost.link);
 };
 
-const markRead = (postIds) => {
+export const markRead = (postIds) => {
   postIds.forEach((postId) => {
     const link = document.querySelector(`a[data-id="${postId}"]`);
     link.classList.remove('fw-bold');
     link.classList.add('fw-normal', 'link-secondary');
   });
-};
-
-export {
-  renderFeeds,
-  renderItems,
-  renderMessage,
-  renderModal,
-  markRead,
 };

@@ -6,7 +6,6 @@ const downloadRss = (watchedState, url) => axios
   .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
   .then((response) => {
     const data = domParser(response.data.contents);
-    console.log(data);
     const feedId = uniqueId();
 
     watchedState.feeds.push({
@@ -26,7 +25,6 @@ const downloadRss = (watchedState, url) => axios
     watchedState.items.unshift(...feedItems);
   })
   .catch((e) => {
-    console.log('boom1');
     throw e;
   });
 
