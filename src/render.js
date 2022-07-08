@@ -45,21 +45,13 @@ export const renderItems = (posts, i18nInstance) => {
 
   const postItems = posts.map((post) => {
     const item = document.createElement('li');
-    item.classList.add(
-      'list-group-item',
-      'border-0',
-      'd-flex',
-      'justify-content-between',
-      'align-items-start',
-    );
-
+    item.classList.add('list-group-item', 'border-0', 'd-flex', 'justify-content-between', 'align-items-start');
     const link = document.createElement('a');
     link.classList.add('fw-bold');
     link.setAttribute('href', post.link);
     link.setAttribute('target', '_blank');
     link.setAttribute('data-id', post.id);
     link.textContent = post.title;
-
     const button = document.createElement('button');
     button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
     button.textContent = i18nInstance.t('buttons.view');
@@ -67,7 +59,6 @@ export const renderItems = (posts, i18nInstance) => {
     button.setAttribute('data-bs-toggle', 'modal');
     button.setAttribute('data-bs-target', '#modal');
     button.setAttribute('data-id', post.id);
-
     item.append(link, button);
 
     return item;
