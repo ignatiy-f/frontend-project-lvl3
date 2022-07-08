@@ -97,6 +97,7 @@ export const renderMessage = ({ messageType, message }, form, i18nInstance) => {
       break;
 
     case 'invalidURL':
+    case 'noValidRss':
     case 'duplicate':
     case 'downloadError':
     case 'Network Error':
