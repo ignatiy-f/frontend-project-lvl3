@@ -55,13 +55,6 @@ export default () => {
     feeds: document.querySelector('.feeds'),
   };
 
-  const proxifyURL = (urlIn) => {
-    const result = new URL('https://allorigins.hexlet.app/get');
-    result.searchParams.set('disableCache', 'true');
-    result.searchParams.set('url', urlIn);
-    return result.href;
-  };
-
   const watchedState = initView(state, elements, i18nInstance);
 
   const update = () => updateRss(watchedState)
@@ -82,7 +75,7 @@ export default () => {
       .then((data) => {
         if (data.url) {
           watchedState.form.process = 'loading';
-          downloadRss(watchedState, proxifyURL(data.url))
+          downloadRss(watchedState, data.url)
             .then(() => {
               watchedState.form.message = 'successAdding';
               watchedState.form.messageType = 'success';

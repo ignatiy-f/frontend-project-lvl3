@@ -2,8 +2,15 @@ import axios from 'axios';
 import { differenceWith, isEqual, uniqueId } from 'lodash';
 import domParser from './parser';
 
+const proxifyURL = (urlIn) => {
+  const result = new URL('https://allorigins.hexlet.app/get');
+  result.searchParams.set('disableCache', 'true');
+  result.searchParams.set('url', urlIn);
+  return result.href;
+};
+
 const downloadRss = (watchedState, url) => axios
-  .get(url)
+  .get(proxifyURL(url))
   .then((response) => {
     const data = domParser(response.data.contents);
     const feedId = uniqueId();
@@ -30,7 +37,7 @@ const downloadRss = (watchedState, url) => axios
 
 const updateRss = (watchedState) => {
   const promises = watchedState.feeds.reverse().map((feed) => axios
-    .get(feed.url)
+    .get(proxifyURL(feed.url))
     .then((response) => {
       const data = domParser(response.data.contents);
 
