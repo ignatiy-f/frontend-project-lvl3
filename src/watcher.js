@@ -1,5 +1,7 @@
-export const renderFeeds = (feeds, i18nInstance) => {
-  const container = document.querySelector('.feeds');
+import onChange from 'on-change';
+
+const renderFeeds = (feeds, elements, i18nInstance) => {
+  const container = elements.feeds;
   container.textContent = '';
 
   const title = document.createElement('h3');
@@ -31,8 +33,8 @@ export const renderFeeds = (feeds, i18nInstance) => {
   container.append(feedList);
 };
 
-export const renderItems = (posts, i18nInstance) => {
-  const container = document.querySelector('.posts');
+const renderItems = (posts, elements, i18nInstance) => {
+  const container = elements.posts;
   container.textContent = '';
 
   const title = document.createElement('h3');
@@ -68,7 +70,7 @@ export const renderItems = (posts, i18nInstance) => {
   container.append(postList);
 };
 
-export const renderMessage = ({ messageType, message }, form, i18nInstance) => {
+const renderMessage = ({ messageType, message }, form, i18nInstance) => {
   const p = form.querySelector('.feedback');
   const input = form.querySelector('input');
 
@@ -112,7 +114,7 @@ export const renderMessage = ({ messageType, message }, form, i18nInstance) => {
   form.append(p);
 };
 
-export const renderModal = (inboxId, posts) => {
+const renderModal = (inboxId, posts) => {
   const modalPost = posts.filter(({ id }) => id === inboxId)[0];
   const modal = document.querySelector('#modal');
 
@@ -126,10 +128,64 @@ export const renderModal = (inboxId, posts) => {
   articleLinkButton.setAttribute('href', modalPost.link);
 };
 
-export const markRead = (postIds) => {
+const markRead = (postIds) => {
   postIds.forEach((postId) => {
     const link = document.querySelector(`a[data-id="${postId}"]`);
     link.classList.remove('fw-bold');
     link.classList.add('fw-normal', 'link-secondary');
   });
+};
+
+export default (state, elements, i18nInstance) => {
+  const modalAction = (watchedState) => Array
+    .from(document.querySelectorAll('button[data-bs-toggle="modal"]'))
+    .map((btn) => btn.addEventListener('click', () => {
+      watchedState.form.modalId = btn.dataset.id;
+      watchedState.form.readPosts.push(btn.dataset.id);
+      watchedState.form.process = 'modal';
+    }));
+
+  const watchedState = onChange(state, (path, value) => {
+    switch (state.form.process) {
+      case 'filling':
+        elements.input.removeAttribute('readonly');
+        elements.button.disabled = false;
+        break;
+
+      case 'successfully':
+        renderMessage(state.form, elements.form, i18nInstance);
+        elements.input.removeAttribute('readonly');
+        elements.button.disabled = false;
+        renderFeeds(state.feeds, elements, i18nInstance);
+        renderItems(state.items, elements, i18nInstance);
+        modalAction(watchedState);
+        break;
+
+      case 'updated':
+        renderItems(state.items, elements, i18nInstance);
+        modalAction(watchedState);
+        break;
+
+      case 'loading':
+        elements.input.setAttribute('readonly', true);
+        elements.button.disabled = true;
+        break;
+
+      case 'error':
+        renderMessage(state.form, elements.form, i18nInstance);
+        elements.input.removeAttribute('readonly');
+        elements.button.disabled = false;
+        break;
+
+      case 'modal':
+        renderModal(state.form.modalId, state.items);
+        markRead(state.form.readPosts);
+        break;
+
+      default:
+        throw new Error(value);
+    }
+  });
+
+  return watchedState;
 };

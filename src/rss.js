@@ -3,7 +3,7 @@ import { differenceWith, isEqual, uniqueId } from 'lodash';
 import domParser from './parser';
 
 const downloadRss = (watchedState, url) => axios
-  .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(url)}`)
+  .get(url)
   .then((response) => {
     const data = domParser(response.data.contents);
     const feedId = uniqueId();
@@ -28,12 +28,11 @@ const downloadRss = (watchedState, url) => axios
     throw e;
   });
 
-const updateRss = (watchedState, state) => {
-  const { feeds, items } = state;
-  const promises = feeds.reverse().map((feed) => axios
-    .get(`https://allorigins.hexlet.app/get?disableCache=true&url=${encodeURIComponent(feed.url)}`)
-    .then((res) => {
-      const data = domParser(res.data.contents);
+const updateRss = (watchedState) => {
+  const promises = watchedState.feeds.reverse().map((feed) => axios
+    .get(feed.url)
+    .then((response) => {
+      const data = domParser(response.data.contents);
 
       const feedItems = data.items.map(({ title, link, description }) => ({
         id: uniqueId(),
@@ -43,18 +42,17 @@ const updateRss = (watchedState, state) => {
         description,
       }));
 
-      const oldItemsLinks = items
+      const oldItemsLinks = watchedState.items
         .filter((item) => item.feedId === feed.id)
         .map(({ link }) => link);
 
       const newItemsLinks = feedItems.map(({ link }) => link);
-
       const differentItemsLinks = differenceWith(newItemsLinks, oldItemsLinks, isEqual);
       const differentItems = feedItems.filter(({ link }) => differentItemsLinks.includes(link));
 
       if (differentItems.length > 0) {
         watchedState.items.unshift(...differentItems);
-        watchedState.process = 'updated';
+        watchedState.form.process = 'updated';
       }
     })
     .catch((e) => e));
