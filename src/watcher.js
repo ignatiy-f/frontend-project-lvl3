@@ -108,7 +108,7 @@ const renderMessage = ({ messageType, message }, form, i18nInstance) => {
       break;
 
     default:
-      throw new Error();
+      throw new Error(`Unknown error: '${message}'!`);
   }
 
   form.append(p);

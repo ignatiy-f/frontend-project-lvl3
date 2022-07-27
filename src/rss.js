@@ -22,13 +22,12 @@ const downloadRss = (watchedState, url) => axios
       url,
     });
 
-    const feedItems = data.items.map(({ title, link, description }) => ({
+    const feedItems = data.items.map((item) => ({
       id: uniqueId(),
       feedId,
-      title,
-      link,
-      description,
+      ...item,
     }));
+
     watchedState.items.unshift(...feedItems);
   })
   .catch((e) => {
@@ -41,12 +40,10 @@ const updateRss = (watchedState) => {
     .then((response) => {
       const data = domParser(response.data.contents);
 
-      const feedItems = data.items.map(({ title, link, description }) => ({
+      const feedItems = data.items.map((item) => ({
         id: uniqueId(),
         feedId: feed.id,
-        title,
-        link,
-        description,
+        ...item,
       }));
 
       const oldItemsLinks = watchedState.items
